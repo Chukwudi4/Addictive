@@ -5,8 +5,8 @@ const notif_channels = {
 }
 
 const dailies_config = {
-    name: notif_channels.channel_dailies;
-    importance: Notifications.AndroidImportance.DEFAULT;
+    name: notif_channels.channel_dailies,
+    importance: Notifications.AndroidImportance.DEFAULT,
     // Optional attributes
     // bypassDnd?: boolean;
     // description?: string | null;
@@ -21,9 +21,29 @@ const dailies_config = {
     // enableVibrate?: boolean;
   }
 
+ const splashData = [
+     {
+         title: 'Let\'s Go!',
+         description: 'fffvefefefefv',
+         imgSource: require('./assets/start.webp')
+     },
+     {
+        title: 'Stay Strong, You\'ve got this!',
+        description: 'fffvefefefefv',
+        imgSource: require('./assets/progress.jpg')
+     },
+     {
+        title: 'It will be worth it at the end',
+        description: 'fffvefefefefv',
+        button: 'Proceed',
+        imgSource: require('./assets/finish.png')
+    }
+ ]
+
  const config ={
     notif_channels,
-    dailies_config
+    dailies_config,
+    splashData
 }
 
 export default config
