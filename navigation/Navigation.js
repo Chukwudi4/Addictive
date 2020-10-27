@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { CreateScreen } from '../src/Create/CreateScreen';
 import WelcomeScreen from '../src/Welcome/WelcomeScreen';
 import {View} from 'react-native'
+import SplashScreen from '../src/Splash/SplashScreen';
+import LoadScreen from '../src/Load/LoadScreen';
 const Home = createStackNavigator()
 export function HomeStack() {
     return(
@@ -16,6 +18,8 @@ export function HomeStack() {
                 color: '#222831',
             }
         }} >
+            <Home.Screen options={{headerShown: false}} name='Load' component={LoadScreen} />
+            <Home.Screen options={{headerShown: false}} name='Splash' component={SplashScreen} />
             <Home.Screen name='Welcome' component={WelcomeScreen} />
             <Home.Screen options={{headerBackImage: () => null}} name='Create' component={CreateScreen} />
             <Home.Screen options={{headerBackImage: () => <View/>}} name='Home' component={HomeScreen} />

@@ -15,7 +15,7 @@ export default function SplashScreen({navigation}){
 
         const finish = () => {
             AsyncStorage.setItem(config.APP_NAME, 'Sobrio');
-            navigation.navigate('Welcome')
+            navigation.navigate('Create')
         }
     
         return(
