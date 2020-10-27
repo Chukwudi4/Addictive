@@ -1,5 +1,7 @@
 import * as Notifications from 'expo-notifications';
 
+const APP_NAME = 'APP_NAME'
+
 const notif_channels = {
     channel_dailies: 'Dailies'
 }
@@ -43,7 +45,8 @@ const dailies_config = {
  const config ={
     notif_channels,
     dailies_config,
-    splashData
+    splashData,
+    APP_NAME
 }
 
 export default config

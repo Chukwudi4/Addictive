@@ -4,26 +4,37 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { widthPercentageToDP as w, heightPercentageToDP as h } from 'react-native-responsive-screen';
 import ViewPager from '@react-native-community/viewpager';
 import config from '../config'
+import AsyncStorage from '@react-native-community/async-storage';
 
-function SplashPage({title, imgSource, description, button}) {
-    return(
-        <View style={styles.container} >
-            <View style={styles.messageBody} >
-                <Text style={styles.appNameStyle} >Sobrio</Text>
-                <Text style={styles.title} >{title}</Text>
-                <Text style={styles.description} >{description}</Text>
-                {button && <Pressable onPress={()=> console.log('sc')}>
-                    <Text style={styles.button} >{button}</Text>
-                </Pressable>}
+
+
+export default function SplashScreen({navigation}){
+
+
+    const SplashPage = ({title, imgSource, description, button}) =>{
+
+        const finish = () => {
+            AsyncStorage.setItem(config.APP_NAME, 'Sobrio');
+            navigation.navigate('Welcome')
+        }
+    
+        return(
+            <View style={styles.container} >
+                <View style={styles.messageBody} >
+                    <Text style={styles.appNameStyle} >Sobrio</Text>
+                    <Text style={styles.title} >{title}</Text>
+                    <Text style={styles.description} >{description}</Text>
+                    {button && <Pressable onPress={()=> finish()}>
+                        <Text style={styles.button} >{button}</Text>
+                    </Pressable>}
+                </View>
+                <LinearGradient style={styles.container} colors={['#4c669f', '#3b5998', '#192f6a']}>
+                    <ImageBackground style={styles.imageBackground} resizeMode='cover' source={imgSource} />
+                </LinearGradient>
             </View>
-            <LinearGradient style={styles.container} colors={['#4c669f', '#3b5998', '#192f6a']}>
-                <ImageBackground style={styles.imageBackground} resizeMode='cover' source={imgSource} />
-            </LinearGradient>
-        </View>
-    )
-}
+        )
+    }
 
-export default function SplashScreen(){
     return (
         <ViewPager style={styles.container} initialPage={0}>
           {config.splashData.map((data, index)=> (
