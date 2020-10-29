@@ -1,15 +1,17 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddictions } from '../../redux/actions';
 import moment from 'moment';
+import { Range } from '../api/medals';
+import config from '../config';
 export function HomeScreen({navigation, route}) {
 
     const [addictions] = useState([]);
     const stateAddictions = useSelector(state => state.app.addictions)
     const dispatch = useDispatch();
-
+    const rangeChecker = useRef(Range(config.stages));
     useEffect(() => {
       fetchAddictions()
     }, [stateAddictions]);
@@ -48,14 +50,16 @@ export function HomeScreen({navigation, route}) {
         const minutes = diff.getMinutes() - epoch.getMinutes();
         const hours = diff.getHours() - epoch.getHours();
         const days= diff.getUTCDay() - epoch.getUTCDay();
-        const year = diff.getFullYear() - epoch.getFullYear();;
+        const year = diff.getFullYear() - epoch.getFullYear();
+        const medalObject = rangeChecker.current.isInRange(days);
 
         return (
             <View>
+                {medalObject.inRange && <Text style={[styles.bodyText, styles.years]}>Medal: {medalObject.metadata.medal}</Text>}
                 {/* {year !== 0 && <Text style={[styles.bodyText, styles.years]}>{year} {year > 1 ? 'years': 'year'}</Text>} */}
                 {days !== 0 && <Text style={[styles.bodyText, styles.days]}>{days} {days > 1 ? 'days': 'day'}</Text>}
-                {hours !== 0 && <Text style={[styles.bodyText, styles.hours]}>{hours} {hours > 1 ? 'hours': 'hour'}</Text>}
-                {minutes !== 0 && <Text style={[styles.bodyText, styles.minute]}>{minutes} min</Text>}
+                {hours !== 0 && days !== 0 && <Text style={[styles.bodyText, styles.hours]}>{hours} {hours > 1 ? 'hours': 'hour'}</Text>}
+                {minutes !== 0 && hours !== 0 && <Text style={[styles.bodyText, styles.minute]}>{minutes} min</Text>}
                 <Text style={styles.bodyText}>{seconds} sec</Text>
             </View>
         )
