@@ -33,14 +33,27 @@ export function HomeScreen({navigation, route}) {
     }
 
     const renderAddictions = ({item}) => {
-        const totalSeconds =(Date.now()-item.date)/1000
-        const seconds= parseInt(totalSeconds % 60);
-        const minutes = parseInt(totalSeconds / 60, 10) % 60;
-        const hours = parseInt(totalSeconds / (60 * 60), 10) % 24;
-        const days= parseInt(totalSeconds / (60 * 60 * 24), 10);
+        const now = new Date()
+
+        const created = new Date()
+        created.setMilliseconds(item.date)
+        // console.log(now.getMilliseconds() - created.getMilliseconds());
+
+        const diff = new Date();
+        diff.setMilliseconds(now.getMilliseconds() - created.getMilliseconds());
+
+        const epoch = new Date('January 1, 1970 00:00:00');
+
+        const seconds= diff.getSeconds() - epoch.getSeconds();
+        const minutes = diff.getMinutes() - epoch.getMinutes();
+        const hours = diff.getHours() - epoch.getHours();
+        const days= diff.getUTCDay() - epoch.getUTCDay();
+        const year = diff.getFullYear() - epoch.getFullYear();;
+
         return (
             <View>
-                {days !== 0 && <Text style={styles.bodyText}>{days} days</Text>}
+                {/* {year !== 0 && <Text style={[styles.bodyText, styles.years]}>{year} {year > 1 ? 'years': 'year'}</Text>} */}
+                {days !== 0 && <Text style={[styles.bodyText, styles.days]}>{days} {days > 1 ? 'days': 'day'}</Text>}
                 {hours !== 0 && <Text style={[styles.bodyText, styles.hours]}>{hours} {hours > 1 ? 'hours': 'hour'}</Text>}
                 {minutes !== 0 && <Text style={[styles.bodyText, styles.minute]}>{minutes} min</Text>}
                 <Text style={styles.bodyText}>{seconds} sec</Text>
@@ -66,7 +79,8 @@ const styles = StyleSheet.create({
         color: '#222831',
         fontSize: 16,
         textAlign: "center",
-        marginVertical: 10
+        marginVertical: 10,
+        fontWeight: 'bold'
     },
     headerText: {
         color: '#222831',
@@ -87,5 +101,8 @@ const styles = StyleSheet.create({
     },
     days: {
         fontSize: 28,
+    },
+    years: {
+        fontSize: 32,
     }
 })
