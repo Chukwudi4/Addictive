@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import config from '../config';
 import { useDispatch } from 'react-redux';
 import { setAddictions } from '../../redux/actions';
@@ -11,7 +11,7 @@ export default function LoadScreen({ navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    checkFirstOpen();
+    setTimeout(() => checkFirstOpen(), 3000);
   }, []);
 
   const fetchAddictions = async () => {
@@ -36,8 +36,15 @@ export default function LoadScreen({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Welcome</Text>
+    <View style={styles.container}>
+      <Image
+        source={require('../assets/splash.png')}
+        style={styles.container}
+      />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+});

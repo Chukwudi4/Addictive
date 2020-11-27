@@ -57,17 +57,22 @@ const splashData = [
     description:
       'You have successfully taken a huge step in the right direction, Thank you so much',
     imgSource: require('./assets/splashone.png'),
+    button: 'Next',
+    last: true,
   },
   {
     title: "Stay Strong, You've got this!",
     description: 'It gets tough but we know you are tougher',
     imgSource: require('./assets/splashtwo.png'),
+    button: 'Next',
+    last: true,
   },
   {
     title: 'Liberate yourself',
     description: 'It will be worth it at the end',
-    button: 'JUMP RIGHT IN',
+    button: "Let's get into it",
     imgSource: require('./assets/splashthree.png'),
+    last: true,
   },
 ];
 

@@ -8,7 +8,7 @@ export default function WelcomeScreen({ navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchAddictions();
+    // fetchAddictions();
   }, []);
 
   const fetchAddictions = async () => {
