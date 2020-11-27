@@ -36,7 +36,7 @@ export function HomeStack() {
         component={CreateScreen}
       />
       <Home.Screen
-        options={{ headerBackImage: () => <View /> }}
+        options={{ headerBackImage: () => null }}
         name="Home"
         component={HomeScreen}
       />

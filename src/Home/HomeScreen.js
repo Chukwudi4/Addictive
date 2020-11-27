@@ -6,6 +6,8 @@ import { setAddictions } from '../../redux/actions';
 import moment from 'moment';
 import { Range } from '../api/medals';
 import config from '../config';
+import { widthPercentageToDP as w } from 'react-native-responsive-screen';
+
 export function HomeScreen({ navigation, route }) {
   const [addictions] = useState([]);
   const stateAddictions = useSelector((state) => state.app.addictions);
@@ -85,13 +87,13 @@ export function HomeScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#a3f7bf',
+    backgroundColor: '#3b5998',
     flex: 1,
     alignItems: 'center',
     paddingTop: 10,
   },
   bodyText: {
-    color: '#222831',
+    color: '#fff',
     fontSize: 16,
     textAlign: 'center',
     marginVertical: 10,
@@ -103,8 +105,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 3,
   },
   titleText: {
-    color: '#222831',
-    fontSize: 22,
+    color: '#fff',
+    fontSize: w(6),
     textAlign: 'center',
     fontWeight: 'bold',
   },
