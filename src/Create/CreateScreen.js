@@ -20,13 +20,19 @@ import { colorSet } from '../appStyles';
 
 export function CreateScreen({ navigation, route }) {
   const addictionData = [
-    'Smoking ',
-    'Alcohol',
-    'Pornography and Masturbation',
-    'Substance Use e.g Heroin, Lean, Crack and other hard drugs',
-    'Social Media',
-    'Sex',
-    'Junk food e.g Soda, Burgers and other processed food',
+    { title: 'Smoking', metaData: '' },
+    { title: 'Alcohol', metaData: '' },
+    { title: 'Pornography and Masturbation', metaData: '' },
+    {
+      title: 'Substance Use',
+      metaData: 'e.g Heroin, Lean, Crack and other hard drugs',
+    },
+    { title: 'Social Media', metaData: '' },
+    { title: 'Sex' },
+    {
+      title: 'Junk food',
+      metaData: 'e.g Soda, Burgers and other processed food',
+    },
   ];
 
   const [selected, setSelected] = useState(-1);
@@ -35,7 +41,6 @@ export function CreateScreen({ navigation, route }) {
   const [showDate, setShowDate] = useState(false);
   const [custom, setCustom] = useState('');
   const [visible, setVisible] = useState(false);
-  const [items, setItems] = useState(data);
   const addictions = route.params?.addictions ?? [];
   const dispatch = useDispatch();
 
@@ -64,7 +69,7 @@ export function CreateScreen({ navigation, route }) {
     // const id = await UUIDGenerator.getRandomUUID();
 
     // const data = {
-    //   title: items[selected],
+    //   title: data[selected],
     //   date: date.getTime(),
     //   id,
     // };
@@ -74,6 +79,32 @@ export function CreateScreen({ navigation, route }) {
     // const addictionsString = JSON.stringify(addictions);
     // AsyncStorage.setItem('addictions', addictionsString);
     navigation.navigate('Custom');
+  };
+
+  const onSelect = async () => {
+    Alert.alert(
+      'Confirmation',
+      `Are you sure you want to proceed with your selection? `,
+      [
+        { text: 'No, Cancel', onPress: () => console.log('ok') },
+        { text: 'Yes', onPress: () => console.log('ok') },
+      ],
+      { cancelable: false },
+    );
+    return;
+    const id = await UUIDGenerator.getRandomUUID();
+
+    const data = {
+      title: data[selected],
+      date: date.getTime(),
+      id,
+    };
+
+    addictions.push(data);
+    dispatch(addAddictions(data));
+    const addictionsString = JSON.stringify(addictions);
+    AsyncStorage.setItem('addictions', addictionsString);
+    navigation.navigate('Home');
   };
 
   const renderItems = ({ item, index }) => {
@@ -91,14 +122,14 @@ export function CreateScreen({ navigation, route }) {
           ]}
           onPress={() => {
             setSelected(index);
-            console.log(index);
+            onSelect();
           }}>
           <Text
             style={[
               styles.title,
               { color: index === selected ? '#fff' : '#6F6F6F' },
             ]}>
-            {item}
+            {item.title} {item.metaData}
           </Text>
         </TouchableOpacity>
       </>
@@ -143,9 +174,9 @@ export function CreateScreen({ navigation, route }) {
                 if (!custom) {
                   return;
                 }
-                items.push(custom);
-                setSelected(items.length - 1);
-                setItems(items);
+                data.push(custom);
+                setSelected(data.length - 1);
+                setItems(data);
                 setVisible(false);
               }}
               style={styles.selectionButton}>
@@ -169,8 +200,8 @@ export function CreateScreen({ navigation, route }) {
         />
       )}
       <FlatList
-        keyExtractor={(item) => item}
-        data={items}
+        keyExtractor={(item) => item.title}
+        data={data}
         // contentContainerStyle={{ alignItems: 'center' }}
         renderItem={renderItems}
       />

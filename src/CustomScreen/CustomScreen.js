@@ -12,16 +12,44 @@ import {
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
 import appStyles, { colorSet } from '../appStyles';
+import AsyncStorage from '@react-native-community/async-storage';
+import { useDispatch } from 'react-redux';
+import { addAddictions } from '../../redux/actions';
+import UUIDGenerator from 'react-native-uuid-generator';
 
-export default function CustomScreen({ navigation }) {
+export default function CustomScreen({ navigation, route }) {
   const [input, setInput] = useState('');
+  const addictions = route.params?.addictions ?? [];
+  const dispatch = useDispatch();
 
-  const onFinish = () => {
+  const onFinish = async () => {
     if (input === '') {
       Alert.alert('Error', 'Please you need to enter something valid');
       return;
     }
-    navigation.navigate('Create');
+    Alert.alert(
+      'Confirmation',
+      `Are you sure you want to proceed with your selection? `,
+      [
+        { text: 'No, Cancel', onPress: () => console.log('ok') },
+        { text: 'Yes', onPress: () => console.log('ok') },
+      ],
+      { cancelable: false },
+    );
+    return;
+    const id = await UUIDGenerator.getRandomUUID();
+
+    const data = {
+      title: data[selected],
+      date: date.getTime(),
+      id,
+    };
+
+    addictions.push(data);
+    dispatch(addAddictions(data));
+    const addictionsString = JSON.stringify(addictions);
+    AsyncStorage.setItem('addictions', addictionsString);
+    navigation.navigate('Home');
   };
 
   return (

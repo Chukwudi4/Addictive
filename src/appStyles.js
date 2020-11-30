@@ -26,7 +26,6 @@ const appStyles = StyleSheet.create({
     fontWeight: 'bold',
     backgroundColor: colorSet.foregroundColor,
     alignSelf: 'center',
-    darkBackground,
   },
 });
 
