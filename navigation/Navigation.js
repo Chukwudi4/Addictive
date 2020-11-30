@@ -7,6 +7,8 @@ import WelcomeScreen from '../src/Welcome/WelcomeScreen';
 import { View } from 'react-native';
 import SplashScreen from '../src/Splash/SplashScreen';
 import LoadScreen from '../src/Load/LoadScreen';
+import RegisterScreen from '../src/Create/RegisterScreen';
+import CustomScreen from '../src/CustomScreen/CustomScreen';
 const Home = createStackNavigator();
 export function HomeStack() {
   return (
@@ -29,12 +31,18 @@ export function HomeStack() {
         name="Splash"
         component={SplashScreen}
       />
+      <Home.Screen
+        options={{ title: '' }}
+        name="Register"
+        component={RegisterScreen}
+      />
       <Home.Screen name="Welcome" component={WelcomeScreen} />
       <Home.Screen
         options={{ headerBackImage: () => null }}
         name="Create"
         component={CreateScreen}
       />
+      <Home.Screen name="Custom" component={CustomScreen} />
       <Home.Screen
         options={{ headerBackImage: () => null }}
         name="Home"

@@ -8,7 +8,7 @@ import {
 import ViewPager from '@react-native-community/viewpager';
 import config from '../config';
 import AsyncStorage from '@react-native-community/async-storage';
-import { colorSet } from '../appStyles';
+import appStyles, { colorSet } from '../appStyles';
 
 export default function SplashScreen({ navigation }) {
   const pagerRef = useRef(null);
@@ -47,7 +47,7 @@ export default function SplashScreen({ navigation }) {
             <View style={{ alignItems: 'center' }}>
               {button && (
                 <Pressable onPress={() => finish()}>
-                  <Text style={styles.button}>{button}</Text>
+                  <Text style={appStyles.button}>{button}</Text>
                 </Pressable>
               )}
 
@@ -129,16 +129,5 @@ const styles = StyleSheet.create({
   slideImage: {
     width: w(60),
     height: w(60),
-  },
-  button: {
-    width: w(70),
-    padding: w(3),
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    color: colorSet.mainBackgroundColor,
-    borderRadius: w(2),
-    fontSize: w(4),
-    fontWeight: 'bold',
-    backgroundColor: colorSet.foregroundColor,
   },
 });

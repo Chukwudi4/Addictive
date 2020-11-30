@@ -16,17 +16,21 @@ import { useDispatch } from 'react-redux';
 import { addAddictions } from '../../redux/actions';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
+import { colorSet } from '../appStyles';
 
 export function CreateScreen({ navigation, route }) {
-  const data = [
+  const addictionData = [
+    'Smoking ',
     'Alcohol',
     'Pornography and Masturbation',
-    'Substance Use',
+    'Substance Use e.g Heroin, Lean, Crack and other hard drugs',
     'Social Media',
-    'Marijuana',
+    'Sex',
+    'Junk food e.g Soda, Burgers and other processed food',
   ];
 
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(-1);
+  const [data] = useState(addictionData);
   const [date, setDate] = useState(new Date());
   const [showDate, setShowDate] = useState(false);
   const [custom, setCustom] = useState('');
@@ -57,19 +61,19 @@ export function CreateScreen({ navigation, route }) {
       Alert.alert('You have not selected date');
       return;
     }
-    const id = await UUIDGenerator.getRandomUUID();
+    // const id = await UUIDGenerator.getRandomUUID();
 
-    const data = {
-      title: items[selected],
-      date: date.getTime(),
-      id,
-    };
+    // const data = {
+    //   title: items[selected],
+    //   date: date.getTime(),
+    //   id,
+    // };
 
-    addictions.push(data);
-    dispatch(addAddictions(data));
-    const addictionsString = JSON.stringify(addictions);
-    AsyncStorage.setItem('addictions', addictionsString);
-    navigation.navigate('Home');
+    // addictions.push(data);
+    // dispatch(addAddictions(data));
+    // const addictionsString = JSON.stringify(addictions);
+    // AsyncStorage.setItem('addictions', addictionsString);
+    navigation.navigate('Custom');
   };
 
   const renderItems = ({ item, index }) => {
@@ -78,13 +82,24 @@ export function CreateScreen({ navigation, route }) {
         <TouchableOpacity
           style={[
             styles.buttonContainer,
-            { backgroundColor: index === selected ? '#3b5998' : '#4c669f' },
+            {
+              backgroundColor:
+                index === selected
+                  ? colorSet.foregroundColor
+                  : colorSet.mainBackgroundColor,
+            },
           ]}
           onPress={() => {
             setSelected(index);
             console.log(index);
           }}>
-          <Text style={styles.buttonText}>{item}</Text>
+          <Text
+            style={[
+              styles.title,
+              { color: index === selected ? '#fff' : '#6F6F6F' },
+            ]}>
+            {item}
+          </Text>
         </TouchableOpacity>
       </>
     );
@@ -139,6 +154,12 @@ export function CreateScreen({ navigation, route }) {
           </View>
         </View>
       </Modal>
+      <Text style={styles.title}>What habit are you trying to stop?</Text>
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={styles.subTitle}>Select one</Text>
+        <Text>heart icon</Text>
+      </View>
+
       {showDate && (
         <DateTimePicker
           minimumDate={new Date()}
@@ -150,6 +171,7 @@ export function CreateScreen({ navigation, route }) {
       <FlatList
         keyExtractor={(item) => item}
         data={items}
+        // contentContainerStyle={{ alignItems: 'center' }}
         renderItem={renderItems}
       />
     </View>
@@ -158,12 +180,33 @@ export function CreateScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    padding: w(5),
-    backgroundColor: '#4c669f',
+    paddingVertical: w(2),
+    marginHorizontal: w(10),
+    width: w(100),
+    alignSelf: 'center',
+    borderBottomWidth: w(0.05),
+    borderTopWidth: w(0.05),
+    borderColor: colorSet.foregroundColor,
   },
   container: {
-    backgroundColor: '#4c669f',
+    backgroundColor: colorSet.mainBackgroundColor,
+    paddingTop: w(10),
+
     flex: 1,
+  },
+  title: {
+    fontSize: w(3.5),
+    color: '#6F6F6F',
+    marginHorizontal: w(10),
+  },
+  subTitle: {
+    fontSize: w(4),
+    color: '#3F4553',
+    fontWeight: 'bold',
+    marginTop: w(2),
+    marginBottom: w(2),
+    marginRight: w(2),
+    marginHorizontal: w(10),
   },
   customInput: {
     borderBottomColor: '#4c669f',

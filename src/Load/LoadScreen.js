@@ -22,7 +22,7 @@ export default function LoadScreen({ navigation }) {
       navigation.navigate('Home');
       return;
     }
-    navigation.navigate('Create');
+    navigation.navigate('Register');
   };
 
   const checkFirstOpen = async () => {
