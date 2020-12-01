@@ -21,12 +21,12 @@ export default function SplashScreen({ navigation }) {
         pagerRef.current.setPage(2);
       }
       AsyncStorage.setItem(config.APP_NAME, 'Sobrio');
-      navigation.navigate('Create');
+      navigation.navigate('Onboard', { screen: 'Create' });
     };
 
     const skip = () => {
       AsyncStorage.setItem(config.APP_NAME, 'Sobrio');
-      navigation.navigate('Create');
+      navigation.navigate('Onboard', { screen: 'Create' });
     };
 
     return (

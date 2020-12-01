@@ -22,7 +22,7 @@ export default function LoadScreen({ navigation }) {
       navigation.navigate('Home');
       return;
     }
-    navigation.navigate('Register');
+    navigation.navigate('Onboard', { screen: 'Register' });
   };
 
   const checkFirstOpen = async () => {

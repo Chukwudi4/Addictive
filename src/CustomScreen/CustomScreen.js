@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { useDispatch } from 'react-redux';
 import { addAddictions } from '../../redux/actions';
 import UUIDGenerator from 'react-native-uuid-generator';
+import OnboardHeader from '../components/OnboardHeader/OnboardHeader';
 
 export default function CustomScreen({ navigation, route }) {
   const [input, setInput] = useState('');
@@ -32,11 +33,14 @@ export default function CustomScreen({ navigation, route }) {
       `Are you sure you want to proceed with your selection? `,
       [
         { text: 'No, Cancel', onPress: () => console.log('ok') },
-        { text: 'Yes', onPress: () => console.log('ok') },
+        { text: 'Yes', onPress: () => proceedToHome() },
       ],
       { cancelable: false },
     );
     return;
+  };
+
+  const proceedToHome = async () => {
     const id = await UUIDGenerator.getRandomUUID();
 
     const data = {

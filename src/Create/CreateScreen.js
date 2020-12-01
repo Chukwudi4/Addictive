@@ -17,6 +17,7 @@ import { addAddictions } from '../../redux/actions';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import { colorSet } from '../appStyles';
+import { Icon } from 'react-native-elements';
 
 export function CreateScreen({ navigation, route }) {
   const addictionData = [
@@ -47,17 +48,30 @@ export function CreateScreen({ navigation, route }) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Text style={styles.headerButton} onPress={save}>
-          Done
-        </Text>
+        <TouchableOpacity
+          onPress={save}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingTop: w(3),
+            marginRight: w(2),
+          }}>
+          <Icon
+            name="edit-2"
+            type="feather"
+            size={w(4)}
+            color={colorSet.foregroundColor}
+          />
+          <Text
+            style={{
+              color: colorSet.foregroundColor,
+              fontSize: w(3),
+              marginHorizontal: w(1),
+            }}>
+            Personalise yours
+          </Text>
+        </TouchableOpacity>
       ),
-      headerLeft: () => (
-        <Text style={styles.headerButton} onPress={() => setVisible(true)}>
-          Other
-        </Text>
-      ),
-      headerTitle: '',
-      // headerTitle: () => <Text onPress={() => setShowDate(true)} >{date ? moment().format("dddd, MMMM Do YYYY"): 'Select date'}</Text>
     });
   });
 
@@ -66,36 +80,14 @@ export function CreateScreen({ navigation, route }) {
       Alert.alert('You have not selected date');
       return;
     }
-    // const id = await UUIDGenerator.getRandomUUID();
-
-    // const data = {
-    //   title: data[selected],
-    //   date: date.getTime(),
-    //   id,
-    // };
-
-    // addictions.push(data);
-    // dispatch(addAddictions(data));
-    // const addictionsString = JSON.stringify(addictions);
-    // AsyncStorage.setItem('addictions', addictionsString);
     navigation.navigate('Custom');
   };
 
-  const onSelect = async () => {
-    Alert.alert(
-      'Confirmation',
-      `Are you sure you want to proceed with your selection? `,
-      [
-        { text: 'No, Cancel', onPress: () => console.log('ok') },
-        { text: 'Yes', onPress: () => console.log('ok') },
-      ],
-      { cancelable: false },
-    );
-    return;
+  const proceedToHome = async () => {
     const id = await UUIDGenerator.getRandomUUID();
 
     const data = {
-      title: data[selected],
+      title: addictionData[selected].title,
       date: date.getTime(),
       id,
     };
@@ -107,6 +99,18 @@ export function CreateScreen({ navigation, route }) {
     navigation.navigate('Home');
   };
 
+  const onSelect = async () => {
+    Alert.alert(
+      'Confirmation',
+      `Are you sure you want to proceed with your selection? `,
+      [
+        { text: 'No, Cancel', onPress: () => console.log('ok') },
+        { text: 'Yes', onPress: () => proceedToHome() },
+      ],
+      { cancelable: false },
+    );
+  };
+
   const renderItems = ({ item, index }) => {
     return (
       <>
@@ -116,7 +120,7 @@ export function CreateScreen({ navigation, route }) {
             {
               backgroundColor:
                 index === selected
-                  ? colorSet.foregroundColor
+                  ? 'rgba(128, 128, 0, 0.23)'
                   : colorSet.mainBackgroundColor,
             },
           ]}
@@ -127,7 +131,7 @@ export function CreateScreen({ navigation, route }) {
           <Text
             style={[
               styles.title,
-              { color: index === selected ? '#fff' : '#6F6F6F' },
+              // { color: index === selected ? '#fff' : '#6F6F6F' },
             ]}>
             {item.title} {item.metaData}
           </Text>
@@ -147,48 +151,10 @@ export function CreateScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Modal
-        style={{ alignItems: 'center', justifyContent: 'center' }}
-        transparent
-        visible={visible}>
-        <View style={styles.modalView}>
-          <TextInput
-            style={styles.customInput}
-            placeholder="Opiod"
-            onChangeText={(text) => setCustom(text)}
-            value={custom}
-          />
-          <View
-            style={{
-              justifyContent: 'space-between',
-              width: w(40),
-              flexDirection: 'row',
-            }}>
-            <Text
-              onPress={() => setVisible(false)}
-              style={styles.selectionButton}>
-              Cancel
-            </Text>
-            <Text
-              onPress={() => {
-                if (!custom) {
-                  return;
-                }
-                data.push(custom);
-                setSelected(data.length - 1);
-                setItems(data);
-                setVisible(false);
-              }}
-              style={styles.selectionButton}>
-              Done
-            </Text>
-          </View>
-        </View>
-      </Modal>
       <Text style={styles.title}>What habit are you trying to stop?</Text>
-      <View style={{ flexDirection: 'row' }}>
-        <Text style={styles.subTitle}>Select one</Text>
-        <Text>heart icon</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+        <Text style={[styles.subTitle, { marginRight: w(1) }]}>Select one</Text>
+        <Icon name="ios-heart-outline" size={w(4)} type="ionicon" />
       </View>
 
       {showDate && (
@@ -215,8 +181,6 @@ const styles = StyleSheet.create({
     marginHorizontal: w(10),
     width: w(100),
     alignSelf: 'center',
-    borderBottomWidth: w(0.05),
-    borderTopWidth: w(0.05),
     borderColor: colorSet.foregroundColor,
   },
   container: {

@@ -19,7 +19,7 @@ export default function WelcomeScreen({ navigation }) {
       navigation.navigate('Home');
       return;
     }
-    navigation.navigate('Create');
+    navigation.navigate('Onboard', { screen: 'Create' });
   };
 
   return (

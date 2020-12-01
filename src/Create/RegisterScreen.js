@@ -21,7 +21,7 @@ export default function RegisterScreen({ navigation }) {
       Alert.alert('No username', 'Please enter a valid username');
       return;
     }
-    navigation.navigate('Create');
+    navigation.navigate('Onboard', { screen: 'Create' });
   };
 
   return (
