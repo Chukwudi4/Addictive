@@ -27,6 +27,10 @@ const appStyles = StyleSheet.create({
     backgroundColor: colorSet.foregroundColor,
     alignSelf: 'center',
   },
+  headerTitleStyle: {
+    color: colorSet.lightText,
+    fontSize: w(3.5),
+  },
 });
 
 export default appStyles;

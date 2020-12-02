@@ -4,7 +4,7 @@ import { HomeScreen } from '../src/Home/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { CreateScreen } from '../src/Create/CreateScreen';
 import WelcomeScreen from '../src/Welcome/WelcomeScreen';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import SplashScreen from '../src/Splash/SplashScreen';
 import LoadScreen from '../src/Load/LoadScreen';
 import RegisterScreen from '../src/Create/RegisterScreen';
@@ -13,7 +13,7 @@ import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
-import { colorSet } from '../src/appStyles';
+import appStyles, { colorSet } from '../src/appStyles';
 import { Icon } from 'react-native-elements';
 const Home = createStackNavigator();
 const Onboard = createStackNavigator();
@@ -98,7 +98,24 @@ export function HomeStack() {
         component={OnboardStack}
       />
       <Home.Screen
-        options={{ headerBackImage: () => null }}
+        options={{
+          headerStyle: {
+            height: h(12),
+            backgroundColor: colorSet.mainBackgroundColor,
+            elevation: 0,
+          },
+          headerBackImage: () => (
+            <View
+              style={{
+                paddingHorizontal: w(3),
+                paddingVertical: w(5),
+              }}>
+              <Text style={styles.headerTitle}>Welcome onboard</Text>
+              <Text style={styles.subTitle}>Tessy Omah</Text>
+            </View>
+          ),
+          title: '',
+        }}
         name="Home"
         component={HomeScreen}
       />
@@ -124,5 +141,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: w(4),
+  },
+  headerTitle: {
+    color: colorSet.lightText,
+    fontSize: w(3.5),
+  },
+  subTitle: {
+    color: '#848484',
+    fontSize: w(3.5),
+    fontWeight: 'bold',
   },
 });

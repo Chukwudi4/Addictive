@@ -4,32 +4,41 @@
  * methods: isInRange: accepts a value and searches for it and returns an object
  */
 
-export const Range = (ranges) => {
-  function isInRange(days) {
-    // const days= parseInt(milliseconds / (60 * 60 * 24 * 1000), 10);
-    // console.log(days);
-    let res = {};
-    let inRange = false;
-    for (let i = 0; i < ranges.length; i++) {
-      inRange = days >= ranges[i].start && days <= ranges[i].end;
-      if (inRange) {
-        res = ranges[i];
-        return {
-          inRange: inRange,
-          isTurningDay: days === ranges[i].start,
-          metadata: res,
-        };
-      }
-    }
+const starter = 0;
+const ambitious = 30;
+const pro = 90;
+const free = 120;
 
-    return {
-      inRange: inRange,
-      metadata: res,
-      isTurningDay: false,
-    };
-  }
-
-  return {
-    isInRange,
-  };
+const medalObject = {
+  starter: {
+    title: 'Starter',
+    color: 'red',
+  },
+  ambitious: {
+    title: 'Ambitious',
+    color: 'pink',
+  },
+  pro: {
+    title: 'Pro',
+    color: 'lemon',
+  },
+  free: {
+    title: 'Free',
+    color: 'green',
+  },
 };
+
+export function getMedal(days) {
+  // const days = parseInt(milliseconds / (60 * 60 * 24 * 1000), 10);
+
+  let medal =
+    days < ambitious
+      ? medalObject['starter']
+      : days < pro
+      ? medalObject['ambitious']
+      : days < free
+      ? medalObject['pro']
+      : medalObject['free'];
+
+  return medal;
+}
