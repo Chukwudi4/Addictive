@@ -178,6 +178,11 @@ export function AppStack() {
       }}>
       <Home.Screen
         options={{ headerShown: false }}
+        name="Tab"
+        component={TabContainer}
+      />
+      <Home.Screen
+        options={{ headerShown: false }}
         name="Load"
         component={LoadScreen}
       />
@@ -190,11 +195,6 @@ export function AppStack() {
         options={{ headerShown: false }}
         name="Onboard"
         component={OnboardStack}
-      />
-      <Home.Screen
-        options={{ headerShown: false }}
-        name="Tab"
-        component={TabContainer}
       />
     </Home.Navigator>
   );
