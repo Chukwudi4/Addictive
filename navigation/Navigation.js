@@ -18,6 +18,7 @@ import { Icon } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DiaryScreen from '../src/Diary/DiaryScreen';
 import AddEntryScreen from '../src/Diary/AddEntryScreen';
+import { BottomBar } from '../src/components/BottomBar/BottomBar';
 
 const Home = createStackNavigator();
 const Onboard = createStackNavigator();
@@ -158,7 +159,14 @@ function DiaryStack() {
 
 function TabContainer() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBar={({ state, navigation, descriptors }) => (
+        <BottomBar
+          state={state}
+          navigation={navigation}
+          descriptors={descriptors}
+        />
+      )}>
       <Tab.Screen name="HomeTab" component={HomeStack} />
       <Tab.Screen name="DiaryTab" component={DiaryStack} />
     </Tab.Navigator>
