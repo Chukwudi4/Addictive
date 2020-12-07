@@ -6,11 +6,9 @@ import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
+import config from '../../config';
 
-const tabConfig = {
-  DiaryTab: { title: 'Diary', iconName: 'menu-book', iconType: 'material' },
-  HomeTab: { title: 'Home', iconName: 'ios-home', iconType: 'ionicon' },
-};
+const tabConfig = config.tabConfig;
 
 export function BottomBar({ state, descriptors, navigation }) {
   console.log(state);

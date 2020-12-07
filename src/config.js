@@ -76,12 +76,18 @@ const splashData = [
   },
 ];
 
+const tabConfig = {
+  DiaryTab: { title: 'Diary', iconName: 'menu-book', iconType: 'material' },
+  HomeTab: { title: 'Home', iconName: 'ios-home', iconType: 'ionicon' },
+};
+
 const config = {
   notif_channels,
   dailies_config,
   splashData,
   APP_NAME,
   stages,
+  tabConfig,
 };
 
 export default config;
