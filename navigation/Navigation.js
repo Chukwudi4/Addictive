@@ -15,8 +15,13 @@ import {
 } from 'react-native-responsive-screen';
 import appStyles, { colorSet } from '../src/appStyles';
 import { Icon } from 'react-native-elements';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import DiaryScreen from '../src/Diary/DiaryScreen';
+import AddEntryScreen from '../src/Diary/AddEntryScreen';
+
 const Home = createStackNavigator();
 const Onboard = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function OnboardStack() {
   return (
@@ -71,7 +76,96 @@ function OnboardStack() {
   );
 }
 
-export function HomeStack() {
+function HomeStack(params) {
+  return (
+    <Home.Navigator>
+      <Home.Screen
+        options={{
+          headerStyle: {
+            height: h(10),
+            backgroundColor: colorSet.mainBackgroundColor,
+            elevation: 0,
+          },
+          headerBackImage: () => (
+            <View
+              style={{
+                paddingHorizontal: w(3),
+                paddingVertical: w(5),
+              }}>
+              <Text style={styles.headerTitle}>Welcome onboard</Text>
+              <Text style={styles.subTitle}>Tessy Omah</Text>
+            </View>
+          ),
+          title: '',
+        }}
+        name="Home"
+        component={HomeScreen}
+      />
+    </Home.Navigator>
+  );
+}
+
+function DiaryStack() {
+  return (
+    <Home.Navigator>
+      <Home.Screen
+        options={{
+          headerStyle: {
+            height: h(10),
+            backgroundColor: colorSet.mainBackgroundColor,
+            elevation: 0,
+          },
+          headerBackImage: () => (
+            <View
+              style={{
+                paddingHorizontal: w(3),
+                paddingVertical: w(5),
+              }}>
+              <Text style={styles.subTitle}>My Journal</Text>
+            </View>
+          ),
+          title: '',
+        }}
+        name="Diary"
+        component={DiaryScreen}
+      />
+      <Home.Screen
+        options={({ navigation }) => ({
+          headerStyle: {
+            height: h(10),
+            backgroundColor: colorSet.mainBackgroundColor,
+            elevation: 0,
+          },
+          headerBackImage: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={styles.backIconStyle}>
+              <Icon
+                style={{ alignSelf: 'center' }}
+                color="#3F414E"
+                name="arrow-back-ios"
+              />
+            </TouchableOpacity>
+          ),
+          title: '',
+        })}
+        name="AddEntry"
+        component={AddEntryScreen}
+      />
+    </Home.Navigator>
+  );
+}
+
+function TabContainer() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="HomeTab" component={HomeStack} />
+      <Tab.Screen name="DiaryTab" component={DiaryStack} />
+    </Tab.Navigator>
+  );
+}
+
+export function AppStack() {
   return (
     <Home.Navigator
       screenOptions={{
@@ -98,26 +192,9 @@ export function HomeStack() {
         component={OnboardStack}
       />
       <Home.Screen
-        options={{
-          headerStyle: {
-            height: h(12),
-            backgroundColor: colorSet.mainBackgroundColor,
-            elevation: 0,
-          },
-          headerBackImage: () => (
-            <View
-              style={{
-                paddingHorizontal: w(3),
-                paddingVertical: w(5),
-              }}>
-              <Text style={styles.headerTitle}>Welcome onboard</Text>
-              <Text style={styles.subTitle}>Tessy Omah</Text>
-            </View>
-          ),
-          title: '',
-        }}
-        name="Home"
-        component={HomeScreen}
+        options={{ headerShown: false }}
+        name="Tab"
+        component={TabContainer}
       />
     </Home.Navigator>
   );
@@ -126,7 +203,7 @@ export function HomeStack() {
 export function AppNavigator() {
   return (
     <NavigationContainer>
-      <HomeStack />
+      <AppStack />
     </NavigationContainer>
   );
 }

@@ -53,7 +53,7 @@ export default function CustomScreen({ navigation, route }) {
     dispatch(addAddictions(data));
     const addictionsString = JSON.stringify(addictions);
     AsyncStorage.setItem('addictions', addictionsString);
-    navigation.navigate('Home');
+    navigation.navigate('Tab', { screen: 'Home' });
   };
 
   return (

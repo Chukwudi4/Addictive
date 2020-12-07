@@ -14,6 +14,7 @@ import { colorSet } from '../appStyles';
 import { Icon } from 'react-native-elements';
 import * as Progress from 'react-native-progress';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import ConfirmResetModal from '../components/ConfirmResetModal/ConfirmResetModal';
 
 export function HomeScreen({ navigation, route }) {
   const [addictions] = useState([]);
@@ -171,6 +172,14 @@ export function HomeScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
+      <ConfirmResetModal
+        modalInfo="By resetting this you get to lose your Sobriety count"
+        buttonTitle="Yes, I'm sure"
+        confirmQuestion="Are your sure you want to reset your counter?"
+        imageTitle="A minute with Tessy Omah"
+        cancelText="Cancel"
+        imageSource={require('../assets/resetimage.png')}
+      />
       <FlatList
         data={stateAddictions}
         showsVerticalScrollIndicator={false}

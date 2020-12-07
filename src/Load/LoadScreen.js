@@ -19,7 +19,7 @@ export default function LoadScreen({ navigation }) {
     const savedAddictions = JSON.parse(addictionsString);
     if (savedAddictions) {
       dispatch(setAddictions(savedAddictions));
-      navigation.navigate('Home');
+      navigation.navigate('Tab', { screen: 'Home' });
       return;
     }
     navigation.navigate('Onboard', { screen: 'Register' });
