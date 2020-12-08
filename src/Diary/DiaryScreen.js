@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  FlatList,
   Image,
   Pressable,
   StyleSheet,
@@ -13,8 +14,46 @@ import {
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
 import { Icon } from 'react-native-elements';
+import moment from 'moment';
 
 export default function DiaryScreen({ navigation }) {
+  const [entries] = useState([
+    {
+      updated: Date.now() - 300000,
+      title: '#1',
+      details: 'I felt like crying',
+    },
+    {
+      updated: Date.now() - 600000,
+      title: '#2',
+      details: 'I wanted to call it quits but I strived',
+    },
+  ]);
+
+  const renderDiaryEntry = (item) => {
+    const updated = new Date();
+    updated.setMilliseconds(item.updated);
+    var m = moment(updated);
+    var now = moment(new Date());
+    return (
+      <View style={{ width: w(80), marginVertical: w(2) }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={{ color: colorSet.mainTextColor, fontSize: w(3.5) }}>
+            {item.title}
+          </Text>
+          <Text style={{ color: colorSet.mainTextColor, fontSize: w(3) }}>
+            updated {now.from(m)}
+          </Text>
+        </View>
+        <Text
+          numberOfLines={2}
+          style={{ color: colorSet.lightText, fontSize: w(3.5) }}>
+          {item.details}
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
@@ -46,6 +85,11 @@ export default function DiaryScreen({ navigation }) {
           </Text>
         </View>
       )}
+      <FlatList
+        data={entries}
+        renderItem={({ item }) => renderDiaryEntry(item)}
+        keyExtractor={(item, index) => `${index}`}
+      />
     </View>
   );
 }

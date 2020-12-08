@@ -11,7 +11,6 @@ import config from '../../config';
 const tabConfig = config.tabConfig;
 
 export function BottomBar({ state, descriptors, navigation }) {
-  console.log(state);
   return (
     <View style={styles.container}>
       {state.routes.map((route, index) => {

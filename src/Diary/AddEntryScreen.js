@@ -10,6 +10,10 @@ export default function AddEntryScreen(params) {
         <Text style={styles.info}>Edit your entry</Text>
       </View>
       <TextInput
+        placeholder="#1"
+        style={[styles.textInput, { marginVertical: w(3) }]}
+      />
+      <TextInput
         placeholder="How are you feeling today"
         multiline
         style={styles.textInput}
