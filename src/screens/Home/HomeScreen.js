@@ -2,19 +2,19 @@ import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAddictions } from '../../redux/actions';
+import { setAddictions } from '../../../redux/actions';
 import moment from 'moment';
-import { Range, getMedal } from '../api/medals';
-import config from '../config';
+import { Range, getMedal } from '../../api/medals';
+import config from '../../config';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
-import { colorSet } from '../appStyles';
+import { colorSet } from '../../appStyles';
 import { Icon } from 'react-native-elements';
 import * as Progress from 'react-native-progress';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
-import ConfirmResetModal from '../components/ConfirmResetModal/ConfirmResetModal';
+import ConfirmResetModal from '../../components/ConfirmResetModal/ConfirmResetModal';
 
 export function HomeScreen({ navigation, route }) {
   const [addictions] = useState([]);

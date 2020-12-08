@@ -11,7 +11,7 @@ import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
-import appStyles, { colorSet } from '../appStyles';
+import appStyles, { colorSet } from '../../appStyles';
 
 export default function RegisterScreen({ navigation }) {
   const [input, setInput] = useState('');

@@ -1,17 +1,14 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React, { useEffect } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import config from '../config';
+import { View, Image, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { useDispatch } from 'react-redux';
-import { setAddictions } from '../../redux/actions';
+import { setAddictions } from '../../../redux/actions';
 
-export default function LoadScreen({ navigation }) {
-  const APP_NAME = 'appName';
-
+export default function WelcomeScreen({ navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => checkFirstOpen(), 3000);
+    // fetchAddictions();
   }, []);
 
   const fetchAddictions = async () => {
@@ -22,17 +19,7 @@ export default function LoadScreen({ navigation }) {
       navigation.navigate('Tab', { screen: 'Home' });
       return;
     }
-    navigation.navigate('Onboard', { screen: 'Register' });
-  };
-
-  const checkFirstOpen = async () => {
-    const check = await AsyncStorage.getItem(config.APP_NAME);
-    console.log(check);
-    if (check) {
-      fetchAddictions();
-      return;
-    }
-    navigation.navigate('Splash');
+    navigation.navigate('Onboard', { screen: 'Create' });
   };
 
   return (

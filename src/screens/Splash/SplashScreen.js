@@ -6,9 +6,9 @@ import {
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
 import ViewPager from '@react-native-community/viewpager';
-import config from '../config';
+import config from '../../config';
 import AsyncStorage from '@react-native-community/async-storage';
-import appStyles, { colorSet } from '../appStyles';
+import appStyles, { colorSet } from '../../appStyles';
 
 export default function SplashScreen({ navigation }) {
   const pagerRef = useRef(null);

@@ -8,7 +8,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { colorSet } from '../appStyles';
+import { colorSet } from '../../appStyles';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,

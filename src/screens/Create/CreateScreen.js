@@ -13,10 +13,10 @@ import { FlatList } from 'react-native-gesture-handler';
 import { widthPercentageToDP as w } from 'react-native-responsive-screen';
 import UUIDGenerator from 'react-native-uuid-generator';
 import { useDispatch } from 'react-redux';
-import { addAddictions } from '../../redux/actions';
+import { addAddictions } from '../../../redux/actions';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import { colorSet } from '../appStyles';
+import { colorSet } from '../../appStyles';
 import { Icon } from 'react-native-elements';
 
 export function CreateScreen({ navigation, route }) {

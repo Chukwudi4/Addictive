@@ -1,14 +1,18 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { HomeScreen } from '../src/Home/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
-import { CreateScreen } from '../src/Create/CreateScreen';
-import WelcomeScreen from '../src/Welcome/WelcomeScreen';
+import {
+  WelcomeScreen,
+  SplashScreen,
+  CreateScreen,
+  HomeScreen,
+  LoadScreen,
+  RegisterScreen,
+  CustomScreen,
+  DiaryScreen,
+  AddEntryScreen,
+} from '../src/screens';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
-import SplashScreen from '../src/Splash/SplashScreen';
-import LoadScreen from '../src/Load/LoadScreen';
-import RegisterScreen from '../src/Create/RegisterScreen';
-import CustomScreen from '../src/CustomScreen/CustomScreen';
 import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
@@ -16,14 +20,12 @@ import {
 import appStyles, { colorSet } from '../src/appStyles';
 import { Icon } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import DiaryScreen from '../src/Diary/DiaryScreen';
-import AddEntryScreen from '../src/Diary/AddEntryScreen';
 import { BottomBar } from '../src/components/BottomBar/BottomBar';
 
 const Home = createStackNavigator();
 const Onboard = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
+\;
 function OnboardStack() {
   return (
     <Onboard.Navigator

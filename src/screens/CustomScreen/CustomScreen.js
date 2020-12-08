@@ -11,12 +11,12 @@ import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
-import appStyles, { colorSet } from '../appStyles';
+import appStyles, { colorSet } from '../../appStyles';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useDispatch } from 'react-redux';
-import { addAddictions } from '../../redux/actions';
+import { addAddictions } from '../../../redux/actions';
 import UUIDGenerator from 'react-native-uuid-generator';
-import OnboardHeader from '../components/OnboardHeader/OnboardHeader';
+import OnboardHeader from '../../components/OnboardHeader/OnboardHeader';
 
 export default function CustomScreen({ navigation, route }) {
   const [input, setInput] = useState('');

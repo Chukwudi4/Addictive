@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, TextInput, Text } from 'react-native';
-import { colorSet } from '../appStyles';
+import { colorSet } from '../../appStyles';
 import { widthPercentageToDP as w } from 'react-native-responsive-screen';
 
 export default function AddEntryScreen(params) {
