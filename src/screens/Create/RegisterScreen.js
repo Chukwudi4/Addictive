@@ -11,17 +11,37 @@ import {
   widthPercentageToDP as w,
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../../redux/actions';
+import { signIn } from '../../api/auth';
+import { updateUserOnLocalDb } from '../../api/localStorage';
 import appStyles, { colorSet } from '../../appStyles';
 
 export default function RegisterScreen({ navigation }) {
-  const [input, setInput] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
 
   const onFinish = () => {
-    if (input === '') {
+    if (username === '') {
       Alert.alert('No username', 'Please enter a valid username');
       return;
     }
-    navigation.navigate('Onboard', { screen: 'Create' });
+    signIn().then((res) => {
+      if (res.success) {
+        dispatch(
+          setUser({
+            username,
+            uid: res.user.uid,
+          }),
+        );
+        updateUserOnLocalDb(res.user, username);
+        navigation.navigate('Onboard', { screen: 'Create' });
+      } else {
+        Alert.alert('Error', "We couldn't sign you in");
+      }
+    });
   };
 
   return (
@@ -29,10 +49,18 @@ export default function RegisterScreen({ navigation }) {
       <Text style={styles.title}>Before we go on</Text>
       <Text style={styles.subTitle}>What name should we call you?</Text>
       <TextInput
-        defaultValue={input}
-        placeholder="Full name"
+        defaultValue={username}
+        placeholder="username"
         placeholderTextColor="#000000"
-        onChangeText={setInput}
+        onChangeText={setUsername}
+        style={[styles.textInput, { marginBottom: w(2) }]}
+      />
+      <TextInput
+        defaultValue={password}
+        placeholder="pas***rd"
+        secureTextEntry={true}
+        placeholderTextColor="#000000"
+        onChangeText={setPassword}
         style={styles.textInput}
       />
       <Pressable onPress={() => onFinish()}>
@@ -41,7 +69,7 @@ export default function RegisterScreen({ navigation }) {
             appStyles.button,
             {
               backgroundColor:
-                input === '' ? colorSet.grey : colorSet.foregroundColor,
+                username === '' ? colorSet.grey : colorSet.foregroundColor,
             },
           ]}>
           Continue

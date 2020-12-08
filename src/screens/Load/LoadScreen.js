@@ -4,41 +4,54 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import config from '../../config';
 import { useDispatch } from 'react-redux';
 import { setAddictions } from '../../../redux/actions';
+import { setUser } from '../../../redux/actions';
+import { checkSignedIn } from '../../api/auth';
+import {
+  isAppRegistered,
+  registerApp,
+  retreiveUserFromLocalDb,
+} from '../../api/localStorage';
 
 export default function LoadScreen({ navigation }) {
-  const APP_NAME = 'appName';
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => checkFirstOpen(), 3000);
   }, []);
 
-  const fetchAddictions = async () => {
-    const addictionsString = await AsyncStorage.getItem('addictions');
-    const savedAddictions = JSON.parse(addictionsString);
-    if (savedAddictions) {
-      dispatch(setAddictions(savedAddictions));
+  async function onAuthStateChanged(user) {
+    const check = await isAppRegistered();
+    console.log(check);
+    if (!check) {
+      navigation.navigate('Splash');
+      return;
+    }
+
+    registerApp();
+
+    if (user) {
+      const savedUser = await retreiveUserFromLocalDb();
+      dispatch(
+        setUser({
+          username: savedUser.username,
+          uid: savedUser.uid,
+        }),
+      );
       navigation.navigate('Tab', { screen: 'Home' });
       return;
+    } else {
+      navigation.navigate('Onboard', { screen: 'Register' });
     }
-    navigation.navigate('Onboard', { screen: 'Register' });
-  };
+  }
 
   const checkFirstOpen = async () => {
-    const check = await AsyncStorage.getItem(config.APP_NAME);
-    console.log(check);
-    if (check) {
-      fetchAddictions();
-      return;
-    }
-    navigation.navigate('Splash');
+    checkSignedIn(onAuthStateChanged);
   };
 
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/splash.png')}
+        source={require('../../assets/splash.png')}
         style={styles.container}
       />
     </View>

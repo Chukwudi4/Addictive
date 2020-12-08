@@ -178,7 +178,7 @@ export function HomeScreen({ navigation, route }) {
         confirmQuestion="Are your sure you want to reset your counter?"
         imageTitle="A minute with Tessy Omah"
         cancelText="Cancel"
-        imageSource={require('../assets/resetimage.png')}
+        imageSource={require('../../assets/resetimage.png')}
       />
       <FlatList
         data={stateAddictions}

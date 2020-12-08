@@ -77,7 +77,7 @@ export default function DiaryScreen({ navigation }) {
         <View style={{ alignItems: 'center' }}>
           <Image
             style={styles.emptyImage}
-            source={require('../assets/emptydiary.png')}
+            source={require('../../assets/emptydiary.png')}
           />
           <Text style={styles.emptyTitle}>Uh Oh, Your Diary is empty</Text>
           <Text style={styles.emptyTip}>

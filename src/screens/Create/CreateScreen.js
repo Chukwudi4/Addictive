@@ -1,21 +1,12 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, { useLayoutEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  TextInput,
-  Modal,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { widthPercentageToDP as w } from 'react-native-responsive-screen';
 import UUIDGenerator from 'react-native-uuid-generator';
 import { useDispatch } from 'react-redux';
 import { addAddictions } from '../../../redux/actions';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment';
 import { colorSet } from '../../appStyles';
 import { Icon } from 'react-native-elements';
 

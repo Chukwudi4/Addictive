@@ -25,7 +25,6 @@ import { BottomBar } from '../src/components/BottomBar/BottomBar';
 const Home = createStackNavigator();
 const Onboard = createStackNavigator();
 const Tab = createBottomTabNavigator();
-\;
 function OnboardStack() {
   return (
     <Onboard.Navigator
