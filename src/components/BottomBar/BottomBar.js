@@ -32,6 +32,7 @@ export function BottomBar({ state, descriptors, navigation }) {
 
         return (
           <TouchableOpacity
+            key={index}
             activeOpacity={0.8}
             accessibilityRole="button"
             onPress={onPress}>

@@ -12,8 +12,8 @@ import {
   heightPercentageToDP as h,
 } from 'react-native-responsive-screen';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../../redux/actions';
 import { signIn } from '../../api/auth';
+import { setUser } from '../../../redux/actions';
 import { updateUserOnLocalDb } from '../../api/localStorage';
 import appStyles, { colorSet } from '../../appStyles';
 
@@ -30,8 +30,14 @@ export default function RegisterScreen({ navigation }) {
     }
     signIn(username, password).then((res) => {
       if (res.success) {
+        dispatch(
+          setUser({
+            uid: res.user.uid,
+            username,
+          }),
+        );
         updateUserOnLocalDb(res.user, username);
-        navigation.navigate('Tab', { screen: 'Home' });
+        navigation.navigate('Onboard', { screen: 'Create' });
       } else {
         Alert.alert('Error', "We couldn't sign you in");
       }

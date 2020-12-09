@@ -14,7 +14,7 @@ export const signInAnonymously = () => {
 };
 
 export const checkSignedIn = (callback) => {
-  auth().onAuthStateChanged((user) => callback(user));
+  return auth().onAuthStateChanged((user) => callback(user));
 };
 
 export const signIn = (username, password) => {
@@ -46,6 +46,7 @@ export const signUp = (username, password) => {
         resolve({ success: true, user: response.user });
       })
       .catch((error) => {
+        console.log(error);
         resolve({ success: false });
       });
   });

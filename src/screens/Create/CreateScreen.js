@@ -87,7 +87,7 @@ export function CreateScreen({ navigation, route }) {
     dispatch(addAddictions(data));
     const addictionsString = JSON.stringify(addictions);
     AsyncStorage.setItem('addictions', addictionsString);
-    navigation.navigate('Onboard', { screen: 'Register' });
+    navigation.navigate('Tab', { screen: 'Home' });
   };
 
   const onSelect = async () => {
@@ -157,7 +157,7 @@ export function CreateScreen({ navigation, route }) {
         />
       )}
       <FlatList
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item, index) => `${index}`}
         data={data}
         // contentContainerStyle={{ alignItems: 'center' }}
         renderItem={renderItems}

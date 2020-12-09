@@ -17,14 +17,14 @@ export default function SplashScreen({ navigation }) {
     const finish = () => {
       console.log(index);
       if (index == 2) {
-        navigation.navigate('Onboard', { screen: 'Create' });
+        navigation.navigate('Onboard', { screen: 'Register' });
         return;
       }
       pagerRef.current.setPage(index + 1);
     };
 
     const skip = () => {
-      navigation.navigate('Onboard', { screen: 'Create' });
+      navigation.navigate('Onboard', { screen: 'Register' });
     };
 
     return (
@@ -58,12 +58,10 @@ export default function SplashScreen({ navigation }) {
       </View>
     );
   };
-  console.log(index);
 
   return (
     <ViewPager
       onPageScroll={(event) => setIndex(event.nativeEvent.position)}
-      // onPageScrollStateChanged={(event) => setIndex(event.nativeEvent.position)}
       onPageSelected={(event) => setIndex(event.nativeEvent.position)}
       ref={pagerRef}
       style={styles.container}

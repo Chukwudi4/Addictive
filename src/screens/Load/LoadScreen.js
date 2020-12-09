@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import config from '../../config';
 import { useDispatch } from 'react-redux';
@@ -14,16 +14,28 @@ import {
 
 export default function LoadScreen({ navigation }) {
   const dispatch = useDispatch();
+  const unsubscribe = useRef(null);
 
   useEffect(() => {
-    setTimeout(() => checkFirstOpen(), 3000);
+    loadAddictions();
+    setTimeout(() => checkFirstOpen(), 1000);
   }, []);
+
+  const loadAddictions = async () => {
+    const addictionsString = await AsyncStorage.getItem('addictions');
+    const savedAddictions = JSON.parse(addictionsString);
+    if (savedAddictions) {
+      dispatch(setAddictions(savedAddictions));
+      return;
+    }
+  };
 
   async function onAuthStateChanged(user) {
     const check = await isAppRegistered();
     console.log(user);
     if (!check && !user) {
       navigation.navigate('Splash');
+      unsubscribe.current && unsubscribe.current();
       return;
     }
 
@@ -37,14 +49,16 @@ export default function LoadScreen({ navigation }) {
         }),
       );
       navigation.navigate('Tab', { screen: 'Home' });
+      unsubscribe.current && unsubscribe.current();
       return;
     } else {
-      navigation.navigate('Onboard', { screen: 'Create' });
+      unsubscribe.current && unsubscribe.current();
+      navigation.navigate('Onboard', { screen: 'Register' });
     }
   }
 
   const checkFirstOpen = async () => {
-    checkSignedIn(onAuthStateChanged);
+    unsubscribe.current = checkSignedIn(onAuthStateChanged);
   };
 
   return (

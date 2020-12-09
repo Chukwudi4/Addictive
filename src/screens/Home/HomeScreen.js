@@ -20,9 +20,6 @@ export function HomeScreen({ navigation, route }) {
   const [addictions] = useState([]);
   const stateAddictions = useSelector((state) => state.app.addictions);
   const dispatch = useDispatch();
-  useEffect(() => {
-    fetchAddictions();
-  }, [stateAddictions]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -36,14 +33,6 @@ export function HomeScreen({ navigation, route }) {
       ),
     });
   });
-
-  const fetchAddictions = async () => {
-    const addictionsString = await AsyncStorage.getItem('addictions');
-    const savedAddictions = JSON.parse(addictionsString);
-    if (savedAddictions) {
-      dispatch(setAddictions(savedAddictions));
-    }
-  };
 
   const renderAddictions = ({ item }) => {
     var now = new Date();
