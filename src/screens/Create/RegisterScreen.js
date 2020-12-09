@@ -50,8 +50,6 @@ export default function RegisterScreen({ navigation }) {
           return;
         }
         navigation.navigate('Onboard', { screen: 'Create' });
-      } else {
-        Alert.alert('Error', "We couldn't sign you in");
       }
     });
   };

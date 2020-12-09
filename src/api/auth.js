@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth';
-
+import { Alert } from 'react-native';
 export const signInAnonymously = () => {
   return new Promise((resolve, _reject) => {
     auth()
@@ -27,12 +27,18 @@ export const signIn = (username, password) => {
         resolve({ success: true, user: response.user });
       })
       .catch((error) => {
-        if ((error.code = 'auth/user-not-found')) {
+        if (error.code === 'auth/user-not-found') {
           signUp(username, password).then((response) => {
             console.log(response.user);
             resolve({ success: true, user: response.user });
           });
+        } else if (error.code === 'auth/wrong-password') {
+          Alert.alert(
+            'Invalid Password',
+            'The password you entered is incorrect, Are you certain this i your password?',
+          );
         } else {
+          Alert.alert('Error', "We couldn't sign you in");
           resolve({ success: false });
         }
       });
