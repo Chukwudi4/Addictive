@@ -28,3 +28,17 @@ export const isAppRegistered = async () => {
   const check = await AsyncStorage.getItem(config.APP_NAME);
   return check;
 };
+
+export const fetchEntriesFromLocalDB = async () => {
+  const entriesString = await AsyncStorage.getItem('ENTRIES');
+  if (entriesString) {
+    const entries = JSON.parse(entriesString);
+    return entries;
+  } else {
+    return [];
+  }
+};
+
+export const saveEntriesOnLocalDB = async (entries) => {
+  await AsyncStorage.setItem('ENTRIES', JSON.stringify(entries));
+};

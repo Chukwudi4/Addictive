@@ -141,17 +141,6 @@ function DiaryStack() {
             backgroundColor: colorSet.mainBackgroundColor,
             elevation: 0,
           },
-          headerBackImage: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.backIconStyle}>
-              <Icon
-                style={{ alignSelf: 'center' }}
-                color="#3F414E"
-                name="arrow-back-ios"
-              />
-            </TouchableOpacity>
-          ),
           title: '',
         })}
         name="AddEntry"

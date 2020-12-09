@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import { colorSet } from '../../appStyles';
 import {
@@ -15,34 +16,52 @@ import {
 } from 'react-native-responsive-screen';
 import { Icon } from 'react-native-elements';
 import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchEntriesFromLocalDB,
+  saveEntriesOnLocalDB,
+} from '../../api/localStorage';
+import { setEntries } from '../../../redux/actions';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function DiaryScreen({ navigation }) {
-  const [entries] = useState([
-    {
-      updated: Date.now() - 300000,
-      title: '#1',
-      details: 'I felt like crying',
-    },
-    {
-      updated: Date.now() - 600000,
-      title: '#2',
-      details: 'I wanted to call it quits but I strived',
-    },
-  ]);
+  const entries = useSelector((state) => state.app.entries);
+  const dispatch = useDispatch();
 
-  const renderDiaryEntry = (item) => {
-    const updated = new Date();
-    updated.setMilliseconds(item.updated);
-    var m = moment(updated);
+  useEffect(() => {
+    loadEntries();
+  }, []);
+
+  useFocusEffect(() => {
+    persistEntries();
+  }, [entries]);
+
+  const persistEntries = async () => {
+    if (entries.length !== 0) {
+      await saveEntriesOnLocalDB(entries);
+    }
+  };
+
+  const loadEntries = async () => {
+    const savedEntries = await fetchEntriesFromLocalDB();
+    dispatch(setEntries(savedEntries));
+  };
+
+  const renderDiaryEntry = (item, index) => {
+    var m = moment(item.updated);
     var now = moment(new Date());
     return (
-      <View style={{ width: w(80), marginVertical: w(2) }}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('AddEntry', { newIndex: index, index })
+        }
+        style={{ width: w(80), marginVertical: w(2) }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={{ color: colorSet.mainTextColor, fontSize: w(3.5) }}>
             {item.title}
           </Text>
           <Text style={{ color: colorSet.mainTextColor, fontSize: w(3) }}>
-            updated {now.from(m)}
+            {m.fromNow()}
           </Text>
         </View>
         <Text
@@ -50,7 +69,7 @@ export default function DiaryScreen({ navigation }) {
           style={{ color: colorSet.lightText, fontSize: w(3.5) }}>
           {item.details}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -69,7 +88,9 @@ export default function DiaryScreen({ navigation }) {
         />
       </View>
       <Pressable
-        onPress={() => navigation.navigate('AddEntry')}
+        onPress={() =>
+          navigation.navigate('AddEntry', { newIndex: entries.length })
+        }
         style={styles.addButton}>
         <Icon name="add" size={w(12)} color={colorSet.foregroundColor} />
       </Pressable>
@@ -87,7 +108,7 @@ export default function DiaryScreen({ navigation }) {
       )}
       <FlatList
         data={entries}
-        renderItem={({ item }) => renderDiaryEntry(item)}
+        renderItem={({ item, index }) => renderDiaryEntry(item, index)}
         keyExtractor={(item, index) => `${index}`}
       />
     </View>

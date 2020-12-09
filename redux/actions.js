@@ -3,6 +3,9 @@ import {
   SET_ADDICTIONS,
   UPDATE_ADDICTIONS,
   SET_USER,
+  SAVE_ENTRY,
+  EDIT_ENTRY,
+  SET_ENTRIES,
 } from './constants';
 
 export const addAddictions = (addiction) => ({
@@ -23,4 +26,20 @@ export const setAddictions = (addictions) => ({
 export const setUser = (user) => ({
   type: SET_USER,
   user,
+});
+
+export const saveEntry = (entry) => ({
+  type: SAVE_ENTRY,
+  entry,
+});
+
+export const editEntry = (entry, index) => ({
+  type: EDIT_ENTRY,
+  entry,
+  index,
+});
+
+export const setEntries = (entries) => ({
+  type: SET_ENTRIES,
+  entries,
 });
