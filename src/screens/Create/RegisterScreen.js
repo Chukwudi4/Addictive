@@ -13,9 +13,13 @@ import {
 } from 'react-native-responsive-screen';
 import { useDispatch } from 'react-redux';
 import { signIn } from '../../api/auth';
-import { setUser } from '../../../redux/actions';
-import { updateUserOnLocalDb } from '../../api/localStorage';
+import { setUser, setAddictions } from '../../../redux/actions';
+import {
+  saveAddictionsOnLocalDb,
+  updateUserOnLocalDb,
+} from '../../api/localStorage';
 import appStyles, { colorSet } from '../../appStyles';
+import { fetchAddictionsFromDB } from '../../api/storage';
 
 export default function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState('');
@@ -28,7 +32,7 @@ export default function RegisterScreen({ navigation }) {
       Alert.alert('No username', 'Please enter a valid username');
       return;
     }
-    signIn(username, password).then((res) => {
+    signIn(username, password).then(async (res) => {
       if (res.success) {
         dispatch(
           setUser({
@@ -36,7 +40,15 @@ export default function RegisterScreen({ navigation }) {
             username,
           }),
         );
+        const addictions = await fetchAddictionsFromDB(res.user.uid);
+
         updateUserOnLocalDb(res.user, username);
+        if (addictions?.length !== 0) {
+          dispatch(setAddictions(addictions));
+          saveAddictionsOnLocalDb(addictions);
+          navigation.navigate('Tab', { screen: 'Home' });
+          return;
+        }
         navigation.navigate('Onboard', { screen: 'Create' });
       } else {
         Alert.alert('Error', "We couldn't sign you in");

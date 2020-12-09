@@ -4,11 +4,12 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { widthPercentageToDP as w } from 'react-native-responsive-screen';
 import UUIDGenerator from 'react-native-uuid-generator';
-import { useDispatch } from 'react-redux';
-import { addAddictions } from '../../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAddictions, setAddictions } from '../../../redux/actions';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { colorSet } from '../../appStyles';
 import { Icon } from 'react-native-elements';
+import { saveAddictionsOnDB } from '../../api/storage';
 
 export function CreateScreen({ navigation, route }) {
   const addictionData = [
@@ -31,9 +32,8 @@ export function CreateScreen({ navigation, route }) {
   const [data] = useState(addictionData);
   const [date, setDate] = useState(new Date());
   const [showDate, setShowDate] = useState(false);
-  const [custom, setCustom] = useState('');
-  const [visible, setVisible] = useState(false);
-  const addictions = route.params?.addictions ?? [];
+  const savedAddictions = useSelector((state) => state.app.addictions);
+  const user = useSelector((state) => state.app.user);
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
@@ -83,10 +83,14 @@ export function CreateScreen({ navigation, route }) {
       id,
     };
 
-    addictions.push(data);
-    dispatch(addAddictions(data));
-    const addictionsString = JSON.stringify(addictions);
+    console.log(savedAddictions);
+    const tempAddictions = savedAddictions;
+
+    tempAddictions.push(data);
+    dispatch(setAddictions(tempAddictions));
+    const addictionsString = JSON.stringify(tempAddictions);
     AsyncStorage.setItem('addictions', addictionsString);
+    saveAddictionsOnDB(user.uid, tempAddictions);
     navigation.navigate('Tab', { screen: 'Home' });
   };
 

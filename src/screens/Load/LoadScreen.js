@@ -35,7 +35,7 @@ export default function LoadScreen({ navigation }) {
     console.log(user);
     if (!check && !user) {
       navigation.navigate('Splash');
-      unsubscribe.current && unsubscribe.current();
+      unsubscribe?.current();
       return;
     }
 
@@ -49,16 +49,17 @@ export default function LoadScreen({ navigation }) {
         }),
       );
       navigation.navigate('Tab', { screen: 'Home' });
-      unsubscribe.current && unsubscribe.current();
+      unsubscribe?.current();
       return;
     } else {
-      unsubscribe.current && unsubscribe.current();
+      unsubscribe?.current();
       navigation.navigate('Onboard', { screen: 'Register' });
     }
   }
 
   const checkFirstOpen = async () => {
     unsubscribe.current = checkSignedIn(onAuthStateChanged);
+    console.log(unsubscribe.current);
   };
 
   return (

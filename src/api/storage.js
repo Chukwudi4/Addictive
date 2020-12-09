@@ -20,14 +20,17 @@ export const saveAddictionsOnDB = (userId, addictions) => {
   } catch (error) {}
 };
 
-export const fetchAddictionsFromDB = (userId) => {
+export const fetchAddictionsFromDB = async (userId) => {
   try {
-    const data = firestore().collection('addictions').doc(userId).get();
-    if (data) {
-      return data.addictions;
+    const doc = await firestore().collection('addictions').doc(userId).get();
+    console.log(doc.data());
+
+    if (doc.data()) {
+      return doc.data().addictions;
     }
     return [];
   } catch (error) {
+    console.log(error);
     return [];
   }
 };

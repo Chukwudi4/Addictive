@@ -15,6 +15,11 @@ export const retreiveUserFromLocalDb = async () => {
   return user;
 };
 
+export const saveAddictionsOnLocalDb = async (addictions) => {
+  const addictionsString = JSON.stringify(addictions);
+  await AsyncStorage.setItem('addictions', addictionsString);
+};
+
 export const registerApp = async () => {
   const check = await AsyncStorage.setItem(config.APP_NAME, 'advdd');
 };
