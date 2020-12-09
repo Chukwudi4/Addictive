@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -12,20 +12,18 @@ import appStyles, { colorSet } from '../../appStyles';
 
 export default function SplashScreen({ navigation }) {
   const pagerRef = useRef(null);
-  const SplashPage = ({ title, imgSource, description, button, index }) => {
+  const [index, setIndex] = useState(0);
+  const SplashPage = ({ title, imgSource, description, button }) => {
     const finish = () => {
-      if (index === 0) {
-        pagerRef.current.setPage(1);
+      console.log(index);
+      if (index == 2) {
+        navigation.navigate('Onboard', { screen: 'Create' });
+        return;
       }
-      if (index === 1) {
-        pagerRef.current.setPage(2);
-      }
-      AsyncStorage.setItem(config.APP_NAME, 'Sobrio');
-      navigation.navigate('Onboard', { screen: 'Create' });
+      pagerRef.current.setPage(index + 1);
     };
 
     const skip = () => {
-      AsyncStorage.setItem(config.APP_NAME, 'Sobrio');
       navigation.navigate('Onboard', { screen: 'Create' });
     };
 
@@ -51,7 +49,7 @@ export default function SplashScreen({ navigation }) {
                 </Pressable>
               )}
 
-              <Pressable onPress={() => finish()}>
+              <Pressable onPress={() => skip()}>
                 <Text style={styles.skip}>{index === 2 ? '' : 'Skip'}</Text>
               </Pressable>
             </View>
@@ -60,9 +58,16 @@ export default function SplashScreen({ navigation }) {
       </View>
     );
   };
+  console.log(index);
 
   return (
-    <ViewPager ref={pagerRef} style={styles.container} initialPage={0}>
+    <ViewPager
+      onPageScroll={(event) => setIndex(event.nativeEvent.position)}
+      // onPageScrollStateChanged={(event) => setIndex(event.nativeEvent.position)}
+      onPageSelected={(event) => setIndex(event.nativeEvent.position)}
+      ref={pagerRef}
+      style={styles.container}
+      initialPage={index}>
       {config.splashData.map((data, index) => (
         <View key={index}>
           <SplashPage

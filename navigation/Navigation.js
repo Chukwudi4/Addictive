@@ -21,6 +21,7 @@ import appStyles, { colorSet } from '../src/appStyles';
 import { Icon } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomBar } from '../src/components/BottomBar/BottomBar';
+import { useSelector } from 'react-redux';
 
 const Home = createStackNavigator();
 const Onboard = createStackNavigator();
@@ -79,6 +80,8 @@ function OnboardStack() {
 }
 
 function HomeStack(params) {
+  const user = useSelector((state) => state.app.user);
+  console.log(user);
   return (
     <Home.Navigator>
       <Home.Screen
@@ -94,8 +97,8 @@ function HomeStack(params) {
                 paddingHorizontal: w(3),
                 paddingVertical: w(5),
               }}>
-              <Text style={styles.headerTitle}>Welcome onboard</Text>
-              <Text style={styles.subTitle}>Tessy Omah</Text>
+              {/* <Text style={styles.headerTitle}>Welcome Onboard</Text> */}
+              <Text style={styles.subTitle}>Hello {user.username}</Text>
             </View>
           ),
           title: '',

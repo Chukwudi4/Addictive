@@ -21,8 +21,8 @@ export default function LoadScreen({ navigation }) {
 
   async function onAuthStateChanged(user) {
     const check = await isAppRegistered();
-    console.log(check);
-    if (!check) {
+    console.log(user);
+    if (!check && !user) {
       navigation.navigate('Splash');
       return;
     }
@@ -30,17 +30,16 @@ export default function LoadScreen({ navigation }) {
     registerApp();
 
     if (user) {
-      const savedUser = await retreiveUserFromLocalDb();
       dispatch(
         setUser({
-          username: savedUser.username,
-          uid: savedUser.uid,
+          uid: user.uid,
+          username: user.email.split('@')[0],
         }),
       );
       navigation.navigate('Tab', { screen: 'Home' });
       return;
     } else {
-      navigation.navigate('Onboard', { screen: 'Register' });
+      navigation.navigate('Onboard', { screen: 'Create' });
     }
   }
 

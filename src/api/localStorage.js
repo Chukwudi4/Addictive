@@ -15,7 +15,7 @@ export const retreiveUserFromLocalDb = async () => {
 };
 
 export const registerApp = async () => {
-  const check = await AsyncStorage.getItem(config.APP_NAME, 'advdd');
+  const check = await AsyncStorage.setItem(config.APP_NAME, 'advdd');
 };
 
 export const isAppRegistered = async () => {

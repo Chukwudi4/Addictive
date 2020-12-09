@@ -28,16 +28,10 @@ export default function RegisterScreen({ navigation }) {
       Alert.alert('No username', 'Please enter a valid username');
       return;
     }
-    signIn().then((res) => {
+    signIn(username, password).then((res) => {
       if (res.success) {
-        dispatch(
-          setUser({
-            username,
-            uid: res.user.uid,
-          }),
-        );
         updateUserOnLocalDb(res.user, username);
-        navigation.navigate('Onboard', { screen: 'Create' });
+        navigation.navigate('Tab', { screen: 'Home' });
       } else {
         Alert.alert('Error', "We couldn't sign you in");
       }

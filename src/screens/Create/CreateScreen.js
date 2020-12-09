@@ -87,7 +87,7 @@ export function CreateScreen({ navigation, route }) {
     dispatch(addAddictions(data));
     const addictionsString = JSON.stringify(addictions);
     AsyncStorage.setItem('addictions', addictionsString);
-    navigation.navigate('Tab', { screen: 'Home' });
+    navigation.navigate('Onboard', { screen: 'Register' });
   };
 
   const onSelect = async () => {

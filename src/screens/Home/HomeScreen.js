@@ -90,14 +90,14 @@ export function HomeScreen({ navigation, route }) {
           Rank
         </Text>
         <View style={styles.medalContainer}>
+          <Text style={styles.medalName}>{item.title}</Text>
+          <Text style={styles.medalTitle}>Sobriety level: {medal.title}</Text>
           <Icon
             name="medal"
             type="material-community"
             color={medal.color}
             size={w(6)}
           />
-          <Text style={styles.medalTitle}>Sobriety level</Text>
-          <Text style={styles.medalName}>{medal.title}</Text>
         </View>
 
         <View
@@ -210,13 +210,14 @@ const styles = StyleSheet.create({
   medalTitle: {
     fontSize: w(3.5),
     color: '#BDBDBD',
-    marginTop: w(2),
-    marginBottom: w(1),
+    marginVertical: w(1),
   },
   medalName: {
     fontSize: w(3.5),
     color: '#848484',
-    marginVertical: w(1),
+    marginTop: w(2),
+    marginBottom: w(1),
+
     textTransform: 'uppercase',
     fontWeight: 'bold',
   },
