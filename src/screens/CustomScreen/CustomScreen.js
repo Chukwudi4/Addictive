@@ -13,15 +13,20 @@ import {
 } from 'react-native-responsive-screen';
 import appStyles, { colorSet } from '../../appStyles';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useDispatch } from 'react-redux';
-import { addAddictions } from '../../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAddictions, setAddictions } from '../../../redux/actions';
 import UUIDGenerator from 'react-native-uuid-generator';
 import OnboardHeader from '../../components/OnboardHeader/OnboardHeader';
+import { saveAddictionsOnDB } from '../../api/storage';
 
 export default function CustomScreen({ navigation, route }) {
   const [input, setInput] = useState('');
   const addictions = route.params?.addictions ?? [];
   const dispatch = useDispatch();
+
+  const savedAddictions = useSelector((state) => state.app.addictions);
+  const user = useSelector((state) => state.app.user);
+  const [date, setDate] = useState(new Date());
 
   const onFinish = async () => {
     if (input === '') {
@@ -44,15 +49,19 @@ export default function CustomScreen({ navigation, route }) {
     const id = await UUIDGenerator.getRandomUUID();
 
     const data = {
-      title: data[selected],
+      title: input,
       date: date.getTime(),
       id,
     };
 
-    addictions.push(data);
-    dispatch(addAddictions(data));
-    const addictionsString = JSON.stringify(addictions);
+    console.log(savedAddictions);
+    const tempAddictions = savedAddictions;
+
+    tempAddictions.push(data);
+    dispatch(setAddictions(tempAddictions));
+    const addictionsString = JSON.stringify(tempAddictions);
     AsyncStorage.setItem('addictions', addictionsString);
+    saveAddictionsOnDB(user.uid, tempAddictions);
     navigation.navigate('Tab', { screen: 'Home' });
   };
 
@@ -65,6 +74,8 @@ export default function CustomScreen({ navigation, route }) {
         placeholder="Smoking cigarettes, indian hemp, etc"
         placeholderTextColor="#000000"
         onChangeText={setInput}
+        numberOfLines={1}
+        maxLength={15}
         style={styles.textInput}
       />
       <Pressable onPress={() => onFinish()}>

@@ -35,13 +35,14 @@ export function BottomBar({ state, descriptors, navigation }) {
             key={index}
             activeOpacity={0.8}
             accessibilityRole="button"
+            style={styles.button}
             onPress={onPress}>
             <Icon
               color={isFocused ? colorSet.foregroundColor : colorSet.lightText}
               name={tabConfig[route.name].iconName}
               type={tabConfig[route.name].iconType}
               containerStyle={styles.icon}
-              size={w(4)}
+              size={w(6)}
             />
             <Text
               style={[
@@ -74,5 +75,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     height: w(15),
+  },
+  button: {
+    width: w(99) / 2,
+    alignItems: 'center',
   },
 });

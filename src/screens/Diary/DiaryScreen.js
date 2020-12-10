@@ -55,7 +55,7 @@ export default function DiaryScreen({ navigation }) {
         onPress={() =>
           navigation.navigate('AddEntry', { newIndex: index, index })
         }
-        style={{ width: w(80), marginVertical: w(2) }}>
+        style={{ width: w(90), marginVertical: w(2) }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={{ color: colorSet.mainTextColor, fontSize: w(3.5) }}>
             {item.title}

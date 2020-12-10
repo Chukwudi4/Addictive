@@ -64,7 +64,8 @@ export function HomeScreen({ navigation, route }) {
 
     // console.log(markedDates);
 
-    const days = parseInt(diff / (60 * 60 * 24 * 1000), 10);
+    const days = moment(Date.now()).diff(moment(item.date), 'days'); // parseInt(diff / (60 * 60 * 24 * 1000), 10);
+
     // console.log(days);
     const medal = getMedal(days);
     return (
